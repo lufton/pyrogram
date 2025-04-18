@@ -2945,6 +2945,7 @@ class Message(Object, Update):
     async def forward(
         self,
         chat_id: Union[int, str],
+        top_msg_id: Optional[int] = None,
         disable_notification: bool = None,
         schedule_date: datetime = None
     ) -> Union["types.Message", List["types.Message"]]:
@@ -2971,6 +2972,9 @@ class Message(Object, Update):
                 For your personal cloud (Saved Messages) you can simply use "me" or "self".
                 For a contact that exists in your Telegram address book you can use his phone number (str).
 
+            top_msg_id (``int``, *optional*):
+                Message or topic id to respond to.
+
             disable_notification (``bool``, *optional*):
                 Sends the message silently.
                 Users will receive a notification with no sound.
@@ -2986,6 +2990,7 @@ class Message(Object, Update):
         """
         return await self._client.forward_messages(
             chat_id=chat_id,
+            top_msg_id=top_msg_id,
             from_chat_id=self.chat.id,
             message_ids=self.id,
             disable_notification=disable_notification,
